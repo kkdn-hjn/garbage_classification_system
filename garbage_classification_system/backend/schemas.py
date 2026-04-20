@@ -101,6 +101,18 @@ class SystemSettingsUpdate(BaseModel):
     log_retention_days: Optional[int] = None
 
 
+class ServiceConfigResponse(BaseModel):
+    model_api_url: Optional[str] = ""
+    model_api_key: Optional[str] = ""
+    model_secret_key: Optional[str] = ""
+
+
+class ServiceConfigUpdate(BaseModel):
+    model_api_url: Optional[str] = None
+    model_api_key: Optional[str] = None
+    model_secret_key: Optional[str] = None
+
+
 class PermissionResponse(BaseModel):
     id: int
     name: str
@@ -176,3 +188,37 @@ class GarbageCategoryUpdate(BaseModel):
 class DataCollectRequest(BaseModel):
     category: str
     count: int = 20
+
+
+class RecognizeLogResponse(BaseModel):
+    id: int
+    user_id: Optional[int] = None
+    username: Optional[str] = None
+    success: bool
+    latency_ms: Optional[int] = None
+    source: str
+    filename: Optional[str] = None
+    class_name: Optional[str] = None
+    category: Optional[str] = None
+    confidence: Optional[str] = None
+    result_json: Optional[str] = None
+    error_message: Optional[str] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class RecognizeLogListResponse(BaseModel):
+    total: int
+    items: List[RecognizeLogResponse]
+
+
+class RecognizeStatsResponse(BaseModel):
+    """API 调用记录看板指标（基于 recognize_logs）。"""
+
+    today_calls: int
+    today_success_rate: float  # 百分比 0–100
+    today_avg_latency_ms: float
+    today_failures: int
+    total_calls: int

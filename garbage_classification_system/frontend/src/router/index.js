@@ -3,7 +3,6 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Layout from '../components/Layout.vue'
 import Dashboard from '../views/Dashboard.vue'
-import Placeholder from '../views/Placeholder.vue'
 import { useAuthStore } from '../stores/auth'
 
 const routes = [
@@ -64,38 +63,33 @@ const routes = [
       {
         path: 'service/status',
         name: 'ServiceStatus',
-        component: Placeholder,
-        meta: { title: '识别服务状态' },
-        props: { title: '识别服务状态', description: 'API是否在线、服务健康状态' }
+        component: () => import('../views/ServiceStatus.vue'),
+        meta: { title: '识别服务状态' }
       },
       {
         path: 'service/api-logs',
         name: 'ServiceApiLogs',
-        component: Placeholder,
-        meta: { title: 'API调用记录' },
-        props: { title: 'API调用记录', description: '查看API调用历史记录' }
+        component: () => import('../views/ServiceApiLogs.vue'),
+        meta: { title: 'API调用记录' }
       },
       {
         path: 'service/config',
         name: 'ServiceConfig',
-        component: Placeholder,
-        meta: { title: '服务配置' },
-        props: { title: '服务配置', description: '识别服务相关配置' }
+        component: () => import('../views/ServiceConfigPage.vue'),
+        meta: { title: '服务配置' }
       },
       // 识别测试
       {
         path: 'recognize/test',
         name: 'RecognizeTest',
-        component: Placeholder,
-        meta: { title: '在线图片识别' },
-        props: { title: '在线图片识别', description: '上传图片，返回分类结果' }
+        component: () => import('../views/RecognizeTest.vue'),
+        meta: { title: '在线图片识别' }
       },
       {
         path: 'recognize/history',
         name: 'RecognizeHistory',
-        component: Placeholder,
-        meta: { title: '识别历史记录' },
-        props: { title: '识别历史记录', description: '查看历史识别记录' }
+        component: () => import('../views/RecognizeHistory.vue'),
+        meta: { title: '识别历史记录' }
       },
       // 系统管理
       {

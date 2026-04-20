@@ -3,8 +3,18 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from database import engine, Base
-from models import User, SystemLog, SystemSetting, Role, Permission, RolePermission, GarbageImage, GarbageCategory  # noqa: F401
-from routers import auth, users, admin, data, model
+from models import (  # noqa: F401
+    User,
+    SystemLog,
+    SystemSetting,
+    Role,
+    Permission,
+    RolePermission,
+    GarbageImage,
+    GarbageCategory,
+    RecognizeLog,
+)
+from routers import auth, users, admin, data, model, service, recognize
 from config import settings
 
 Base.metadata.create_all(bind=engine)
@@ -50,6 +60,8 @@ app.include_router(users.router)
 app.include_router(admin.router)
 app.include_router(data.router)
 app.include_router(model.router)
+app.include_router(service.router)
+app.include_router(recognize.router)
 
 app.mount("/laji3", StaticFiles(directory=str(UPLOAD_DIR)), name="laji3")
 app.mount("/laji1", StaticFiles(directory=str(LAJI1_DIR)), name="laji1")

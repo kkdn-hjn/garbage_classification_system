@@ -3,6 +3,7 @@
     <h1 class="page-title">{{ title }}</h1>
     <div class="placeholder-card">
       <p class="placeholder-desc">{{ description }}</p>
+      <p class="placeholder-hint">功能开发中...</p>
     </div>
   </div>
 </template>

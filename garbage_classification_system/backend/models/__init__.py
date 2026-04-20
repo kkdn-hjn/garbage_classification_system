@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Boolean
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from database import Base
@@ -135,3 +135,25 @@ class GarbageImage(Base):
     filepath = Column(String(500), nullable=False)
     category = Column(String(50), nullable=False, default="其他", index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
+class RecognizeLog(Base):
+    """在线识别与 API 调用记录（用于识别历史与统计看板）。"""
+
+    __tablename__ = "recognize_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    username = Column(String(255), nullable=True, index=True)
+    success = Column(Boolean, nullable=False, default=False, index=True)
+    latency_ms = Column(Integer, nullable=True)
+    source = Column(String(32), nullable=False, default="none", index=True)  # local / easydl / none
+    filename = Column(String(512), nullable=True)
+    class_name = Column(String(128), nullable=True)
+    category = Column(String(128), nullable=True)
+    confidence = Column(String(64), nullable=True)  # 存展示用字符串，如 "95.20"
+    result_json = Column(Text, nullable=True)
+    error_message = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)
+
+    user = relationship("User", foreign_keys=[user_id])
